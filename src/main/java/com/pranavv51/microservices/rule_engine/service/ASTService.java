@@ -33,22 +33,16 @@ public class ASTService {
     }
 
 
-    private boolean evaluateExpression(HashMap<String,Double> values,ASTNode rootNode){
+    public boolean evaluateExpression(HashMap<String,Double> values,ASTNode rootNode){
         ExpressionEvaluator expressionEvaluatorInst = new ExpressionEvaluator();
         double res = expressionEvaluatorInst.evaluate(rootNode,values);
         if(res==1.0) return true;
         return false;
     }
 
-    private Optional<AstMongoRootNode> fetchRule(String ruleName){
+    public Optional<AstMongoRootNode> fetchRule(String ruleName){
         return astMongoRepoInst.findById(ruleName);
     }
 
-    private void fetchAndEvaluate(String ruleName){
-        Optional<AstMongoRootNode> astMongoFetchedVal = fetchRule(ruleName);
-        if(astMongoFetchedVal.isPresent()){
-            List<String> variables = astMongoFetchedVal.get().getVariables();
-            ASTNode rootNode = astMongoFetchedVal.get().getRootNode();
-        }
-    }
+
 }

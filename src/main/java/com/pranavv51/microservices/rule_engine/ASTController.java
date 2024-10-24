@@ -3,10 +3,11 @@ package com.pranavv51.microservices.rule_engine;
 
 import com.pranavv51.microservices.rule_engine.model.AstMongoRootNode;
 import com.pranavv51.microservices.rule_engine.model.InputFromUser;
+import com.pranavv51.microservices.rule_engine.model.astnodemodel.ASTNode;
 import com.pranavv51.microservices.rule_engine.service.ASTService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
@@ -25,10 +26,17 @@ public class ASTController {
     }
 
 
-    // http://localhost:8150/fetch-a-rule/ruleName/{rule}
-    @GetMapping(value = "/fetch-a-rule/ruleName/{rule}")
-    public ResponseEntity<Optional<AstMongoRootNode>> fetchARule(@PathVariable("rule") String rule){
-        return ResponseEntity.ok(astServiceInst.fetchRule(rule));
+    // http://localhost:8150/fetch-variables-from-rule/rule-name/{ruleName}
+    @GetMapping(value = "/fetch-variables-from-rule/rule-name/{ruleName}")
+    public Optional<AstMongoRootNode> fetchVariablesInTheRule(@PathVariable String ruleName){
+        return astServiceInst.fetchRule(ruleName);
+    }
+
+
+    //http://localhost:8150/enter-values-to-variables-and-rootnode
+    @GetMapping(value = "/enter-values-to-variables-and-rootnode")
+    public boolean evaluateRule(@RequestBody HashMap<String,Double> variableTovalues, @RequestParam("rootNode") ASTNode rootNode){
+        return astServiceInst.evaluateExpression(variableTovalues,rootNode);
     }
 
 

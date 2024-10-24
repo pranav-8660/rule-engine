@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class ASTController {
 
     private final ASTService astServiceInst;
@@ -21,6 +22,7 @@ public class ASTController {
 
     // http://localhost:8150/create-and-save-rule
     @PostMapping(value = "/create-and-save-rule")
+    @CrossOrigin
     public boolean createAndSaveRule(@RequestBody InputFromUser inputInstance){
         return astServiceInst.storeRuleInDB(inputInstance.getRuleName(),inputInstance.getRule().toString());
     }
@@ -34,9 +36,10 @@ public class ASTController {
 
 
     //http://localhost:8150/enter-values-to-variables-and-rootnode
-    @GetMapping(value = "/enter-values-to-variables-and-rootnode")
-    public boolean evaluateRule(@RequestBody HashMap<String,Double> variableTovalues, @RequestParam("rootNode") ASTNode rootNode){
-        return astServiceInst.evaluateExpression(variableTovalues,rootNode);
+    @PostMapping(value = "/enter-values-to-variables-and-rootnode")
+    @CrossOrigin
+    public boolean evaluateRule(@RequestBody HashMap<String,Double> variableTovalues, @RequestParam("rulename") String rulename){
+        return astServiceInst.evaluateExpression(variableTovalues,rulename);
     }
 
 

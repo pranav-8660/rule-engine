@@ -33,9 +33,9 @@ public class ASTService {
     }
 
 
-    public boolean evaluateExpression(HashMap<String,Double> values,ASTNode rootNode){
+    public boolean evaluateExpression(HashMap<String,Double> values,String ruleName){
         ExpressionEvaluator expressionEvaluatorInst = new ExpressionEvaluator();
-        double res = expressionEvaluatorInst.evaluate(rootNode,values);
+        double res = expressionEvaluatorInst.evaluate(new ASTParser().parse(ruleName),values);
         if(res==1.0) return true;
         return false;
     }
